@@ -16,7 +16,7 @@ const books = [
 const typeDefs = gql`
   # Comments in GraphQL are defined with the hash (#) symbol.
 
-  # This "Book" type can be used in other type declarations.
+  # This "Book" type can be used in other type decslarations.
   type Book {
     title: String
     author: String
