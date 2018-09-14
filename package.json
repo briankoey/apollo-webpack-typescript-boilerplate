@@ -19,6 +19,8 @@
     "concurrently": "^4.0.1",
     "fork-ts-checker-webpack-plugin": "^0.4.9",
     "happypack": "^5.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.2",
     "nodemon": "^1.18.4",
     "thread-loader": "^1.2.0",
     "tslint": "^5.11.0",
@@ -28,11 +30,18 @@
     "webpack-cli": "^3.1.0",
     "webpack-node-externals": "^1.7.2"
   },
+  "lint-staged": {
+     "*.ts": [
+      "tslint",
+      "git add"
+    ]
+  },
   "scripts": {
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
     "watch": "webpack --watch --mode development",
     "start": "npm run build && node dist/main.js",
-    "start:watch": "concurrently \"npm run watch\" \"nodemon dist/main.js\""
+    "start:watch": "concurrently \"npm run watch\" \"nodemon dist/main.js\"",
+    "precommit": "lint-staged"
   }
 }

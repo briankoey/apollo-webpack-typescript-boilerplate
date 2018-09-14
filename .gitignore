@@ -62,3 +62,6 @@ typings/
 
 #cache-loader
 .cache-loader
+
+# local dist
+dist
