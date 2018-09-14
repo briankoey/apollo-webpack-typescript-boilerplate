@@ -64,4 +64,4 @@ typings/
 .cache-loader
 
 # local dist
-dist
+dist/
