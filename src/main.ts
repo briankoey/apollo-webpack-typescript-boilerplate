@@ -1,5 +1,11 @@
 import { ApolloServer, gql } from "apollo-server";
 
+function greeter(person: string) {
+  return "Hello, " + person;
+}
+
+let user = [0, ,1, 2];
+
 const books = [
   {
     title: "Harry Potter and the Chamber of Secrets",
