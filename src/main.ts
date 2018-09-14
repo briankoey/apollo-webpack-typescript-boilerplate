@@ -1,20 +1,20 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer, gql } from 'apollo-server';
 
 function greeter(person: string) {
-  return "Hello, " + person;
+  return `Hello, ${person}`;
 }
 
-let user = [0, ,1, 2];
+const user = [0, , 1, 2];
 
 const books = [
   {
-    title: "Harry Potter and the Chamber of Secrets",
-    author: "J.K. Rowling"
+    author: 'J.K. Rowling',
+    title: 'Harry Potter and the Chamber of Secrets',
   },
   {
-    title: "Jurassic Park",
-    author: "Michael Crichton"
-  }
+    title: 'Jurassic Park',
+    author: 'Michael Crichton',
+  },
 ];
 
 // Type definitions define the "shape" of your data and specify
@@ -38,9 +38,9 @@ const typeDefs = gql`
 // Resolvers define the technique for fetching the types in the
 // schema.  We'll retrieve books from the "books" array above.
 const resolvers = {
-    Query: {
-        books: () => books,
-    },
+  Query: {
+    books: () => books,
+  },
 };
 
 // In the most basic sense, the ApolloServer can be started
@@ -51,5 +51,5 @@ const server = new ApolloServer({ typeDefs, resolvers });
 // This `listen` method launches a web-server.  Existing apps
 // can utilize middleware options, which we'll discuss later.
 server.listen().then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`);
+  console.log(`🚀  Server ready at ${url}`);
 });
