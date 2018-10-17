@@ -1,21 +1,23 @@
 const path = require('path');
-const nodeExternals = require("webpack-node-externals");
-const HappyPack = require("happypack");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const nodeExternals = require('webpack-node-externals');
+const HappyPack = require('happypack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const os = require('os');
 
 module.exports = {
-  entry: "./src/main.ts",
-  target: "node",
+  entry: './src/app.ts',
+  target: 'node',
   output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "dist"),
-    libraryTarget: "commonjs2"
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'commonjs2',
   },
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: ['.ts', '.tsx', '.js'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   externals: [nodeExternals()],
   module: {
     rules: [
@@ -23,57 +25,57 @@ module.exports = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: [
-          { loader: "cache-loader" },
+          { loader: 'cache-loader' },
           {
-            loader: "thread-loader",
+            loader: 'thread-loader',
             options: {
               // there should be 1 cpu for the fork-ts-checker-webpack-plugin
-              workers: require("os").cpus().length - 1
-            }
+              workers: os.cpus().length - 1,
+            },
           },
           {
-            loader: "ts-loader",
+            loader: 'ts-loader',
             options: {
-              happyPackMode: true // IMPORTANT! use happyPackMode mode to speed-up compilation and reduce errors reported to webpack
-            }
-          }
-        ]
+              happyPackMode: true,
+            },
+          },
+        ],
       },
       {
         test: /\.ts$/,
-        enforce: "pre",
+        enforce: 'pre',
         use: [
           {
-            loader: "tslint-loader",
+            loader: 'tslint-loader',
             options: {
-              tsConfigFile: "tsconfig.json",
-              configFile: "tslint.json"
-            }
-          }
-        ]
+              tsConfigFile: 'tsconfig.json',
+              configFile: 'tslint.json',
+            },
+          },
+        ],
       },
       {
         test: /\.js$/,
         exclude: /(node_module)/,
-        use: "happypack/loader?id=babel"
-      }
-    ]
+        use: 'happypack/loader?id=babel',
+      },
+    ],
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
     new HappyPack({
-      id: "babel",
+      id: 'babel',
       loaders: [
         {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env"],
-            plugins: ["@babel/plugin-transform-runtime"],
-            cacheDirectory: true
-          }
-        }
-      ]
-    })
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-runtime'],
+            cacheDirectory: true,
+          },
+        },
+      ],
+    }),
     // new HappyPack({
     //   id: "ts",
     //   loaders: [
@@ -83,5 +85,5 @@ module.exports = {
     //     }
     //   ]
     // })
-  ]
+  ],
 };
